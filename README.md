@@ -13,7 +13,6 @@ Création d'une VM Vagrant avec Tomcat 9 et une application web Java.
 5. [Étape 4 : Déployer l'application](#étape-4--déployer-lapplication)
 6. [Étape 5 : Tester l'application](#étape-5--tester-lapplication)
 7. [Étape 6 : Tester le menu de gestion](#étape-6--tester-le-menu-de-gestion)
-8. [Troubleshooting](#troubleshooting)
 
 ---
 
@@ -123,10 +122,9 @@ sudo /opt/tomcat/bin/version.sh
 
 ### 4.1 Exécuter le script de déploiement automatique
 ```bash
-/opt/deploy.sh
+sudo /opt/deploy.sh
 ```
 ![1770920020706](image/README/1770920020706.png)
-![1770920057957](image/README/1770920057957.png)
 
 ### 4.2 Ou manuellement (Option 1 du menu)
 ```bash
@@ -152,74 +150,17 @@ http://192.168.33.12:8080/webapp
 http://localhost:811/webapp
 ```
 
-**Capture d'écran attendue :**
-> [📸 Page d'accueil]
-> - Titre : "TP DevOps - VM srv-web"
-> - Message : "✓ L'application fonctionne !"
-> - Date et heure affichées
-> - Nom de la machine
-
+![1770920057957](image/README/1770920057957.png)
 ---
 
 ## 🔧 Étape 6 : Tester le Menu de Gestion
 
 ### 6.1 Lancer le script
 ```bash
-/opt/deploy.sh
+sudo /opt/deploy.sh
 ```
 
-**Capture d'écran attendue :**
-> [📸 Menu principal]
-> ```
-> ======================================
->   MENU DEPLOYMENT TOMCAT
-> ======================================
-> 1 Compiler l'application
-> 2 Déployer l'application
-> 3 Arrêter Tomcat
-> 4 Démarrer Tomcat
-> 5 Redémarrer Tomcat
-> 6 Voir le statut de Tomcat
-> 7 Afficher les logs
-> 8 Quitter
-> ```
-
-### 6.2 Tester les options
-```bash
-# Option 3 : Arrêter Tomcat
-# Option 4 : Démarrer Tomcat
-# Option 6 : Voir le statut
-# Option 7 : Voir les logs
-```
-
-**Captures d'écran attendues :**
-> [📸 Option 3] Tomcat arrêté
-> [📸 Option 4] Tomcat démarré
-> [📸 Option 6] Statut actif
-> [📸 Option 7] Logs en direct
-
----
-
-## 🛠️ Troubleshooting
-
-### ❌ "VM ne démarre pas"
-```bash
-vagrant up --debug
-```
-
-### ❌ "Tomcat ne démarre pas"
-```bash
-tail -f /opt/tomcat/logs/catalina.out
-```
-
-### ❌ "Application non accessible"
-```bash
-# Vérifier l'état de Tomcat
-ps aux | grep tomcat
-
-# Vérifier les logs
-cat /opt/tomcat/logs/catalina.out
-```
+![1770920020706](image/README/1770920020706.png)
 
 ---
 
@@ -247,7 +188,6 @@ TP1-DevOps-virtualisation-Linux/
 
 ../app/                   (Application Java)
 ├── pom.xml
-├── README.md
 └── src/main/webapp/
     └── index.jsp
 ```
@@ -258,7 +198,7 @@ TP1-DevOps-virtualisation-Linux/
 
 ```bash
 # Vagrant
-vagrant up              # Lancer VM
+vagrant up --provision  # Lancer VM avec le provisionnement
 vagrant ssh             # Connexion
 vagrant halt            # Arrêter VM
 vagrant destroy         # Supprimer VM
@@ -269,7 +209,7 @@ sudo /opt/tomcat/bin/shutdown.sh      # Arrêter
 tail -f /opt/tomcat/logs/catalina.out # Logs
 
 # Déploiement
-/opt/deploy.sh          # Menu interactif
+sudo /opt/deploy.sh          # Menu interactif
 ```
 
 ---
@@ -297,15 +237,3 @@ tail -f /opt/tomcat/logs/catalina.out # Logs
 **Version :** 3.0
 
 ---
-
-## ✅ Checklist de Validation
-
-- [ ] VM créée et accessible via SSH
-- [ ] JDK 8, 11, 17 installés
-- [ ] Tomcat 9 installé et démarré
-- [ ] Script `/opt/deploy.sh` exécuté
-- [ ] Application accessible via `http://localhost:811/webapp`
-- [ ] Menu de déploiement testé (toutes les options)
-- [ ] Logs vérifiés (pas d'erreurs)
-
-**TP Réussi ! 🎉**
